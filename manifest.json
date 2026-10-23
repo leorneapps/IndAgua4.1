@@ -1,0 +1,10 @@
+{
+  "name": "IndAgua Lírios v4.1",
+  "short_name": "IndAgua",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#f4f7f6",
+  "lang": "pt-BR",
+  "description": "PWA offline-first para gestão industrial - versão 4.1"
+}

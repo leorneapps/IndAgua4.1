@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f6" />
+  <title>IndAgua Lírios v4.1</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+
+    <section id="dashboard-screen" class="screen active">
+      <header class="topbar">
+        <h1>Dashboard Geral</h1>
+        <p class="subtitle">Grupo Leorne &bull; IndAgua Lírios v4.1</p>
+      </header>
+      <div class="dashboard-grid">
+        <button class="card dashboard-card" id="btn-vendas" type="button"><span class="card-icon icon-blue">🛒</span><span class="card-title">Vendas</span><span class="card-text">Venda multi-itens com carrinho</span></button>
+        <button class="card dashboard-card" id="btn-compras" type="button"><span class="card-icon icon-green">📦</span><span class="card-title">Compras</span><span class="card-text">Entrada de estoque por compras</span></button>
+        <button class="card dashboard-card" id="btn-producao" type="button"><span class="card-icon icon-purple">🏭</span><span class="card-title">Produção</span><span class="card-text">Baixa em cascata ativa</span></button>
+        <button class="card dashboard-card" id="btn-estoque" type="button"><span class="card-icon icon-red">📊</span><span class="card-title">Estoque</span><span class="card-text">Movimentações e conferência</span></button>
+        <button class="card dashboard-card" id="btn-financeiro" type="button"><span class="card-icon icon-orange">💰</span><span class="card-title">Financeiro</span><span class="card-text">Fluxo de caixa e gavetas</span></button>
+        <button class="card dashboard-card" id="btn-gestao-pessoas" type="button"><span class="card-icon icon-teal">👥</span><span class="card-title">Gestão de Pessoas</span><span class="card-text">Folha, Vales, Férias e Avulsos</span></button>
+        <button class="card dashboard-card" id="btn-fechamento-caixa" type="button"><span class="card-icon icon-slate">🔒</span><span class="card-title">Fechamento de Caixa</span><span class="card-text">Conferência e fechamento diário</span></button>
+        <button class="card dashboard-card" id="btn-relatorio-vendas" type="button"><span class="card-icon icon-blue">📈</span><span class="card-title">Relatórios / Avisos</span><span class="card-text">Vendas, análise e avisos aos clientes</span></button>
+        <button class="card dashboard-card" id="btn-contas-pagar" type="button"><span class="card-icon icon-orange">📋</span><span class="card-title">Contas a Pagar</span><span class="card-text">Gerenciamento de contas a prazo</span></button>
+        <button class="card dashboard-card" id="btn-cadastros" type="button"><span class="card-icon icon-navy">🗂️</span><span class="card-title">Cadastros</span><span class="card-text">CRUD completo das bases</span></button>
+        <button class="card dashboard-card" id="btn-comodato" type="button"><span class="card-icon icon-teal">🏺</span><span class="card-title">Comodato</span><span class="card-text">Controle de garrafões em posse de clientes</span></button>
+        <button class="card dashboard-card" id="btn-documentos" type="button"><span class="card-icon icon-navy">📋</span><span class="card-title">Documentos/Alvarás</span><span class="card-text">Controle de documentos e vencimentos</span></button>
+        <button class="card dashboard-card" id="btn-configuracoes" type="button"><span class="card-icon icon-slate">⚙️</span><span class="card-title">Configurações</span><span class="card-text">Parâmetros gerais do sistema</span></button>
+      </div>
+      <div class="daily-summary">
+        <div class="card metric-card"><span class="metric-label">Movimentação de Hoje - Entradas</span><strong id="today-entradas" class="metric-value">R$ 0,00</strong></div>
+        <div class="card metric-card"><span class="metric-label">Movimentação de Hoje - Saídas</span><strong id="today-saidas" class="metric-value">R$ 0,00</strong></div>
+      </div>
+    </section>
+
+    <section id="cadastros-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Menu de Cadastros</h2><p class="subtitle">Selecione o cadastro desejado</p></header>
+      <div class="dashboard-grid smaller-grid">
+        <button class="card dashboard-card compact-card" id="btn-clientes" type="button"><span class="card-icon icon-blue">👤</span><span class="card-title">Clientes</span><span class="card-text">Cadastro com limite de crédito</span></button>
+        <button class="card dashboard-card compact-card" id="btn-funcionarios" type="button"><span class="card-icon icon-green">🧑‍🔧</span><span class="card-title">Funcionários</span><span class="card-text">Cadastro de funcionários</span></button>
+        <button class="card dashboard-card compact-card" id="btn-fornecedores" type="button"><span class="card-icon icon-orange">🚚</span><span class="card-title">Fornecedores</span><span class="card-text">Cadastro de fornecedores</span></button>
+        <button class="card dashboard-card compact-card" id="btn-produtos" type="button"><span class="card-icon icon-purple">📦</span><span class="card-title">Produtos</span><span class="card-text">Preço e ficha técnica</span></button>
+        <button class="card dashboard-card compact-card" id="btn-insumos" type="button"><span class="card-icon icon-red">🧪</span><span class="card-title">Insumos</span><span class="card-text">Base da composição</span></button>
+        <button class="card dashboard-card compact-card" id="btn-tipos-custos" type="button"><span class="card-icon icon-teal">📁</span><span class="card-title">Tipos de Custos</span><span class="card-text">Cadastro estrutural</span></button>
+        <button class="card dashboard-card compact-card" id="btn-cidades" type="button"><span class="card-icon icon-navy">🏙️</span><span class="card-title">Cidades</span><span class="card-text">Cadastro de cidades</span></button>
+      </div>
+    </section>
+
+    <section id="clientes-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Clientes</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Cliente</h3><span class="pill">CRUD completo</span></div>
+          <form id="cliente-form">
+            <input type="hidden" id="cliente-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="cliente-nome">Nome</label><input id="cliente-nome" type="text" required /></div>
+              <div class="field"><label for="cliente-documento">CPF / CNPJ</label><input id="cliente-documento" type="text" /></div>
+              <div class="field"><label for="cliente-telefone">Telefone</label><input id="cliente-telefone" type="text" /></div>
+              <div class="field"><label for="cliente-cidade">Cidade</label><select id="cliente-cidade" class="cidade-select"><option value="">Selecione a Cidade</option></select></div>
+              <div class="field"><label for="cliente-limite-credito">Limite de Crédito (R$)</label><input id="cliente-limite-credito" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="cliente-endereco">Endereço</label><input id="cliente-endereco" type="text" placeholder="Rua, número, bairro" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="cliente-observacao">Observação</label><textarea id="cliente-observacao" rows="2" placeholder="Observações sobre o cliente"></textarea></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-cliente">Salvar Cliente</button><button class="btn-secondary" type="button" id="btn-cancelar-cliente">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Clientes Cadastrados</h3><span id="clientes-total" class="pill">0 itens</span></div><div id="clientes-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <section id="funcionarios-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Funcionários</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Funcionário</h3><span class="pill">CRUD completo</span></div>
+          <form id="funcionario-form">
+            <input type="hidden" id="funcionario-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="funcionario-nome">Nome</label><input id="funcionario-nome" type="text" required /></div>
+              <div class="field"><label for="funcionario-cpf">CPF</label><input id="funcionario-cpf" type="text" /></div>
+              <div class="field"><label for="funcionario-telefone">Telefone</label><input id="funcionario-telefone" type="text" /></div>
+              <div class="field"><label for="funcionario-funcao">Função</label><input id="funcionario-funcao" type="text" /></div>
+              <div class="field"><label for="funcionario-salario-base">Salário Base (R$)</label><input id="funcionario-salario-base" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="funcionario-rg">RG</label><input id="funcionario-rg" type="text" /></div>
+              <div class="field"><label for="funcionario-data-admissao">Data de Admissão</label><input id="funcionario-data-admissao" type="date" /></div>
+              <div class="field"><label for="funcionario-tipo-contrato">Tipo de Contrato</label><select id="funcionario-tipo-contrato"><option value="">Selecione</option><option value="CLT">CLT</option><option value="PJ">PJ</option><option value="Temporário">Temporário</option><option value="Autônomo">Autônomo</option></select></div>
+              <div class="field"><label for="funcionario-chave-pix">Chave Pix</label><input id="funcionario-chave-pix" type="text" placeholder="CPF, e-mail, telefone ou chave aleatória" /></div>
+              <div class="field"><label for="funcionario-status">Status do Funcionário</label><select id="funcionario-status"><option value="ATIVO">Ativo</option><option value="INATIVO">Inativo</option></select></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-funcionario">Salvar Funcionário</button><button class="btn-secondary" type="button" id="btn-cancelar-funcionario">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Funcionários Cadastrados</h3><span id="funcionarios-total" class="pill">0 itens</span></div><div id="funcionarios-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <section id="fornecedores-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Fornecedores</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Fornecedor</h3><span class="pill">CRUD completo</span></div>
+          <form id="fornecedor-form">
+            <input type="hidden" id="fornecedor-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="fornecedor-nome">Nome</label><input id="fornecedor-nome" type="text" required /></div>
+              <div class="field"><label for="fornecedor-documento">CNPJ / CPF</label><input id="fornecedor-documento" type="text" /></div>
+              <div class="field"><label for="fornecedor-telefone">Telefone</label><input id="fornecedor-telefone" type="text" /></div>
+              <div class="field"><label for="fornecedor-cidade">Cidade</label><input id="fornecedor-cidade" type="text" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="fornecedor-endereco">Endereço</label><input id="fornecedor-endereco" type="text" placeholder="Rua, número, bairro" /></div>
+              <div class="field"><label for="fornecedor-email">E-mail</label><input id="fornecedor-email" type="email" placeholder="email@exemplo.com" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="fornecedor-observacao">Observação</label><textarea id="fornecedor-observacao" rows="2" placeholder="Observações sobre o fornecedor"></textarea></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-fornecedor">Salvar Fornecedor</button><button class="btn-secondary" type="button" id="btn-cancelar-fornecedor">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Fornecedores Cadastrados</h3><span id="fornecedores-total" class="pill">0 itens</span></div><div id="fornecedores-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <section id="produtos-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Produtos</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Produto</h3><span class="pill">CRUD completo</span></div>
+          <form id="produto-form">
+            <input type="hidden" id="produto-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="produto-nome">Nome do Produto</label><input id="produto-nome" type="text" required /></div>
+              <div class="field"><label for="produto-estoque-inicial">Estoque Inicial</label><input id="produto-estoque-inicial" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="produto-preco-venda">Preço de Venda (R$)</label><input id="produto-preco-venda" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="produto-codigo">Código / SKU</label><input id="produto-codigo" type="text" placeholder="Código interno" /></div>
+              <div class="field"><label for="produto-estoque-minimo">Estoque Mínimo</label><input id="produto-estoque-minimo" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="produto-observacao">Observação</label><textarea id="produto-observacao" rows="2" placeholder="Observações sobre o produto"></textarea></div>
+            </div>
+            <div class="recipe-card">
+              <div class="section-head"><h4 class="recipe-title">Composição / Ficha Técnica</h4><span class="pill">Receita industrial</span></div>
+              <div id="ficha-tecnica-lista" class="recipe-list"></div>
+              <button id="btn-add-insumo-receita" class="btn-secondary" type="button">Adicionar Insumo à Receita</button>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-produto">Salvar Produto</button><button class="btn-secondary" type="button" id="btn-cancelar-produto">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Produtos Cadastrados</h3><span id="produtos-total" class="pill">0 itens</span></div><div id="produtos-lista" class="entity-list"></div><div class="detail-card"><h4 class="recipe-title">Visualização da Ficha Técnica</h4><div id="produto-detalhe" class="empty-list">Clique em um produto para visualizar os insumos vinculados.</div></div></section>
+      </div>
+    </section>
+
+    <section id="insumos-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Insumos</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Insumo</h3><span class="pill">CRUD completo</span></div>
+          <form id="insumo-form">
+            <input type="hidden" id="insumo-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="insumo-nome">Nome do Insumo</label><input id="insumo-nome" type="text" required /></div>
+              <div class="field"><label for="insumo-estoque-inicial">Estoque Inicial</label><input id="insumo-estoque-inicial" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="insumo-estoque-minimo">Estoque Mínimo</label><input id="insumo-estoque-minimo" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="insumo-observacao">Observação</label><textarea id="insumo-observacao" rows="2" placeholder="Observações sobre o insumo"></textarea></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-insumo">Salvar Insumo</button><button class="btn-secondary" type="button" id="btn-cancelar-insumo">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Insumos Cadastrados</h3><span id="insumos-total" class="pill">0 itens</span></div><div id="insumos-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <section id="tipos-custos-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Tipos de Custos</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Tipo de Custo</h3><span class="pill">CRUD completo</span></div>
+          <form id="tipo-custo-form">
+            <input type="hidden" id="tipo-custo-id" />
+            <div class="field"><label for="tipo-custo-nome">Nome do Tipo de Custo</label><input id="tipo-custo-nome" type="text" required /></div>
+            <div class="field"><label for="tipo-custo-observacao">Observação</label><textarea id="tipo-custo-observacao" rows="4"></textarea></div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-tipo-custo">Salvar Tipo</button><button class="btn-secondary" type="button" id="btn-cancelar-tipo-custo">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Tipos de Custos Cadastrados</h3><span id="tipos-custos-total" class="pill">0 itens</span></div><div id="tipos-custos-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <!-- COMPRAS — com data de vencimento condicional -->
+    <section id="compras-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Compras</h2><p class="subtitle">Entrada de estoque por compras</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Nova Compra</h3><span class="pill">Atualiza estoque</span></div>
+          <form id="compra-form">
+            <input type="hidden" id="compra-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="compra-data">Data</label><input id="compra-data" type="date" required /></div>
+              <div class="field"><label for="compra-fornecedor-id">Fornecedor</label><select id="compra-fornecedor-id" required><option value="">Selecione</option></select></div>
+              <div class="field"><label for="compra-item-tipo">Tipo de Item</label><select id="compra-item-tipo" required><option value="">Selecione</option><option value="produto">Produto</option><option value="insumo">Insumo</option></select></div>
+              <div class="field"><label for="compra-item-id">Item</label><select id="compra-item-id" required><option value="">Selecione</option></select></div>
+              <div class="field"><label for="compra-quantidade">Quantidade</label><input id="compra-quantidade" type="number" min="0.01" step="0.01" value="1" required /></div>
+              <div class="field"><label for="compra-preco-unitario">Preço Unitário</label><input id="compra-preco-unitario" type="number" min="0" step="0.01" value="0" required /></div>
+              <div class="field"><label for="compra-forma-pagamento">Forma de Pagamento</label><select id="compra-forma-pagamento" required><option value="">Selecione</option><option value="Dinheiro">Dinheiro (À Vista)</option><option value="Pix">Pix (À Vista)</option><option value="Prazo">A Prazo</option></select></div>
+              <div class="field" style="display:none;"><label for="compra-data-vencimento">Data de Vencimento</label><input id="compra-data-vencimento" type="date" /></div>
+            </div>
+            <div class="field"><label for="compra-total">Valor Total</label><input id="compra-total" type="number" step="0.01" value="0" readonly /></div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-compra">Salvar Compra</button><button class="btn-secondary" type="button" id="btn-cancelar-compra">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Compras Registradas</h3><span id="compras-total" class="pill">0 itens</span></div><div id="compras-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <!-- PRODUÇÃO -->
+    <section id="producao-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Registrar Produção</h2><p class="subtitle">Entrada do produto acabado com baixa automática dos insumos da ficha técnica</p></header>
+      <div class="summary-grid">
+        <div class="card metric-card"><span class="metric-label">Produtos Cadastrados</span><strong id="metric-produtos" class="metric-value">0</strong></div>
+        <div class="card metric-card"><span class="metric-label">Insumos Cadastrados</span><strong id="metric-insumos" class="metric-value">0</strong></div>
+        <div class="card metric-card"><span class="metric-label">Movimentações</span><strong id="metric-movimentos" class="metric-value">0</strong></div>
+        <div class="card metric-card"><span class="metric-label">Produções Registradas</span><strong id="metric-producoes" class="metric-value">0</strong></div>
+      </div>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Formulário de Produção</h3><span class="pill">Baixa em cascata ativa</span></div>
+          <form id="producao-form">
+            <div class="form-grid two-columns">
+              <div class="field"><label for="producao-data">Data</label><input id="producao-data" type="date" required /></div>
+              <div class="field"><label for="producao-produto-id">Selecionar Produto</label><select id="producao-produto-id" required><option value="">Selecione</option></select></div>
+              <div class="field"><label for="producao-quantidade">Quantidade Produzida</label><input id="producao-quantidade" type="number" min="0.01" step="0.01" value="1" required /></div>
+              <div class="field"><label for="producao-preview">Consumo Previsto</label><textarea id="producao-preview" rows="4" readonly></textarea></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit">Registrar Produção</button><button class="btn-secondary" type="button" id="btn-reset-producao">Limpar</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Últimas Produções</h3><span id="producoes-total" class="pill">0 registros</span></div><div id="producoes-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <!-- VENDAS -->
+    <section id="vendas-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Registro de Venda</h2><p class="subtitle">Venda multi-itens com carrinho, trava de crédito e integração financeira</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Pedido</h3><span class="pill">Carrinho ativo</span></div>
+          <form id="venda-form">
+            <input type="hidden" id="venda-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="venda-data">Data</label><input id="venda-data" type="date" required /></div>
+              <div class="field"><label for="venda-cliente-id">Cliente</label><select id="venda-cliente-id" required><option value="">Selecione</option></select></div>
+              <div class="field"><label for="venda-produto-id">Produto</label><select id="venda-produto-id"><option value="">Selecione</option></select></div>
+              <div class="field"><label for="venda-quantidade">Quantidade</label><input id="venda-quantidade" type="number" min="0.01" step="0.01" value="1" /></div>
+              <div class="field"><label for="venda-preco-unitario">Preço Unitário</label><input id="venda-preco-unitario" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="venda-subtotal-item">Subtotal do Item</label><input id="venda-subtotal-item" type="number" min="0" step="0.01" value="0" readonly /></div>
+              <div class="field"><label for="venda-forma-pagamento">Forma de Pagamento</label><select id="venda-forma-pagamento" required><option value="">Selecione</option><option value="Dinheiro">Dinheiro</option><option value="Pix">Pix</option><option value="Prazo">A Prazo/Crédito</option></select></div>
+              <div class="field"><label>Limite Disponível</label><div id="venda-limite-box" class="limit-box">Selecione um cliente</div></div>
+            </div>
+            <div class="form-actions"><button class="btn-secondary" type="button" id="btn-add-item-venda">Adicionar ao Pedido</button></div>
+            <div class="detail-card"><h4 class="recipe-title">Carrinho do Pedido</h4><div id="venda-carrinho-lista" class="entity-list"></div></div>
+            <div class="field" style="margin-top:16px"><label for="venda-total">Valor Total da Venda</label><input id="venda-total" type="number" min="0" step="0.01" value="0" readonly /></div>
+            <div id="venda-credito-cliente-box" class="hidden" style="background:#ede9fe;border:1px solid #7c3aed;border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="color:#5b21b6;font-weight:600;">💰 Crédito Disponível: <strong id="venda-credito-valor">R$ 0,00</strong></span>
+              <button type="button" id="btn-usar-credito" class="btn-small" style="background:#7c3aed;color:#fff;">Usar Crédito</button>
+            </div>
+            <div class="field"><label for="venda-valor-pago">Valor Pago pelo Cliente (opcional)</label><input id="venda-valor-pago" type="number" min="0" step="0.01" placeholder="Deixe 0 para usar o total" /></div>
+            <div id="venda-troco-box" class="hidden" style="background:#d1fae5;border:1px solid #10b981;border-radius:10px;padding:10px 14px;margin-bottom:8px;">
+              <span style="color:#065f46;font-weight:600;">Troco / Crédito gerado: <strong id="venda-troco-valor">R$ 0,00</strong></span>
+            </div>
+            <div id="venda-alerta-credito" class="credit-alert hidden">⚠️ Limite insuficiente!</div>
+            <div class="field"><label class="checkbox-line"><input type="checkbox" id="venda-autorizacao-especial" /> Autorização Especial (Gaudencio)</label></div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-venda">Finalizar Venda</button><button class="btn-secondary" type="button" id="btn-cancelar-venda">Cancelar</button></div>
+          </form>
+        </section>
+        <div class="estorno-col">
+          <section class="card section-card"><div class="section-head"><h3 class="section-title">Últimas 10 Vendas Realizadas</h3><span id="vendas-total" class="pill">0 itens</span></div><div id="vendas-lista" class="entity-list"></div><div class="detail-card"><h4 class="recipe-title">Resumo do Pedido</h4><div id="venda-detalhe" class="empty-list">Clique em uma venda para visualizar os itens do cupom.</div></div></section>
+
+          <!-- PEDIDOS RECENTES — ESTORNO v3.1 -->
+          <section class="card section-card">
+            <div class="section-head">
+              <h3 class="section-title">🔄 Pedidos Recentes</h3>
+              <span class="pill" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">Estorno do Dia</span>
+            </div>
+            <p style="color:var(--muted);font-size:0.88rem;margin:0 0 14px;">Somente pedidos de hoje, antes do fechamento do caixa.</p>
+            <div id="pedidos-recentes-lista" class="entity-list">
+              <div class="empty-list">Carregando pedidos do dia...</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTOQUE -->
+    <section id="estoque-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Estoque</h2><p class="subtitle">Saldo atual de produtos e insumos</p></header>
+      <div class="card section-card">
+        <div class="section-head"><h3 class="section-title">Produtos em Estoque</h3><span id="estoque-produtos-total" class="pill">0 produtos</span></div>
+        <div style="overflow-x:auto; margin-top:1rem;">
+          <table class="estoque-tabela">
+            <thead><tr><th style="text-align:center; width:50px;">Status</th><th style="text-align:left;">Produto</th><th style="text-align:center;">Estoque Atual</th><th style="text-align:center;">Preço de Venda</th><th style="text-align:center;">Ações</th></tr></thead>
+            <tbody id="estoque-produtos-lista"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card section-card" style="margin-top:1rem;">
+        <div class="section-head"><h3 class="section-title">Insumos em Estoque</h3><span id="estoque-insumos-total" class="pill">0 insumos</span></div>
+        <div style="overflow-x:auto; margin-top:1rem;">
+          <table class="estoque-tabela">
+            <thead><tr><th style="text-align:center; width:50px;">Status</th><th style="text-align:left;">Insumo</th><th style="text-align:center;">Estoque Atual</th><th style="text-align:center;">Custo de Compra</th></tr></thead>
+            <tbody id="estoque-insumos-lista"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card section-card" style="margin-top:1rem;">
+        <div class="section-head"><h3 class="section-title">Últimas Movimentações</h3><span id="estoque-movimentos-total" class="pill">0 registros</span></div>
+        <div class="form-grid two-columns">
+          <div class="field"><label for="filtro-movimento-tipo">Filtro por Tipo</label><select id="filtro-movimento-tipo"><option value="todos">Todos</option><option value="entrada">Entrada</option><option value="saida">Saída</option><option value="producao">Produção</option></select></div>
+        </div>
+        <div id="estoque-movimentos-lista" class="entity-list"></div>
+      </div>
+    </section>
+
+    <!-- FINANCEIRO — 4 GAVETAS -->
+    <section id="financeiro-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Financeiro</h2><p class="subtitle">Fluxo de caixa com sistema de gavetas</p></header>
+      <div class="summary-grid">
+        <div class="card metric-card"><span class="metric-label">Saldo Total</span><strong id="financeiro-saldo" class="metric-value">R$ 0,00</strong></div>
+        <div class="card metric-card"><span class="metric-label">Entradas</span><strong id="financeiro-entradas" class="metric-value entry-positive">R$ 0,00</strong></div>
+        <div class="card metric-card"><span class="metric-label">Saídas</span><strong id="financeiro-saidas" class="metric-value entry-negative">R$ 0,00</strong></div>
+      </div>
+      <!-- GAVETAS -->
+      <div class="summary-grid" style="margin-top:8px;">
+        <div class="card metric-card" style="border-left:4px solid #16a34a;"><span class="metric-label">Gaveta Dinheiro</span><strong id="gaveta-dinheiro" class="metric-value">R$ 0,00</strong></div>
+        <div class="card metric-card" style="border-left:4px solid #2563eb;"><span class="metric-label">Gaveta Pix</span><strong id="gaveta-pix" class="metric-value">R$ 0,00</strong></div>
+        <div class="card metric-card" style="border-left:4px solid #7c3aed;"><span class="metric-label">Gaveta Tesoureiro</span><strong id="gaveta-tesoureiro" class="metric-value">R$ 0,00</strong></div>
+        <div class="card metric-card" style="border-left:4px solid #111827;"><span class="metric-label">Total Gavetas</span><strong id="gaveta-total" class="metric-value">R$ 0,00</strong></div>
+      </div>
+      <div class="finance-tabs">
+        <button class="card finance-tab-card" id="btn-fin-tab-extrato" type="button">🟢 EXTRATO GERAL</button>
+        <button class="card finance-tab-card" id="btn-fin-tab-custo" type="button">🔴 LANÇAR CUSTO</button>
+        <button class="card finance-tab-card" id="btn-fin-tab-devedores" type="button">🔵 CLIENTES DEVEDORES</button>
+        <button class="card finance-tab-card" id="btn-fin-transferir" type="button" style="background:#10b981;color:#fff;">💸 TRANSFERIR</button>
+      </div>
+      <section id="financeiro-extrato-panel" class="card section-card finance-panel hidden">
+        <div class="section-head"><h3 class="section-title">Extrato Geral</h3><span id="financeiro-total" class="pill">0 registros</span></div>
+        <div id="financeiro-lista" class="entity-list"></div>
+      </section>
+      <section id="financeiro-custo-panel" class="card section-card finance-panel hidden">
+        <div class="section-head"><h3 class="section-title">Novo Lançamento de Custo</h3><span class="pill">Saída manual</span></div>
+        <form id="financeiro-form">
+          <input type="hidden" id="financeiro-id" />
+          <div class="form-grid two-columns">
+            <div class="field"><label for="financeiro-data">Data</label><input id="financeiro-data" type="date" required /></div>
+            <div class="field"><label for="financeiro-tipo-custo-id">Tipo de Custo</label><select id="financeiro-tipo-custo-id" required><option value="">Selecione</option></select></div>
+            <div class="field"><label for="financeiro-descricao">Descrição</label><input id="financeiro-descricao" type="text" required /></div>
+            <div class="field"><label for="financeiro-valor">Valor</label><input id="financeiro-valor" type="number" min="0.01" step="0.01" value="0" required /></div>
+            <div class="field"><label for="financeiro-forma-pagamento">Forma de Pagamento</label><select id="financeiro-forma-pagamento" onchange="toggleFinanceiroGavetaVencimento(this.value)"><option value="Dinheiro">Dinheiro (À Vista)</option><option value="Pix">Pix (À Vista)</option><option value="Tesoureiro">Tesouraria (À Vista)</option><option value="APrazo">A Prazo (Contas a Pagar)</option></select></div>
+            <div class="field" id="financeiro-gaveta-field"><label for="financeiro-gaveta-origem">Gaveta de Origem</label><select id="financeiro-gaveta-origem"><option value="Dinheiro">Gaveta Dinheiro</option><option value="Pix">Gaveta Pix</option><option value="Tesoureiro">Gaveta Tesoureiro</option></select></div>
+            <div class="field" id="financeiro-vencimento-field" style="display:none;"><label for="financeiro-vencimento">Data de Vencimento</label><input id="financeiro-vencimento" type="date" /></div>
+          </div>
+          <div id="financeiro-aprazo-aviso" style="display:none;margin-bottom:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde047;border-radius:12px;font-size:0.9rem;color:#854d0e;">&#128204; Nenhuma saída de caixa será gerada agora. O valor será registrado em <strong>Contas a Pagar</strong> para baixa futura.</div>
+          <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-financeiro">Novo Lançamento</button><button class="btn-secondary" type="button" id="btn-cancelar-financeiro">Cancelar</button></div>
+        </form>
+      </section>
+      <section id="financeiro-devedores-panel" class="card section-card finance-panel hidden">
+        <div class="section-head"><h3 class="section-title">Clientes Devedores</h3><span id="devedores-total" class="pill">0 clientes</span></div>
+        <div id="devedores-lista" class="entity-list"></div>
+        <div class="detail-card"><h4 class="recipe-title">Carteira do Cliente</h4><div id="devedor-detalhe" class="empty-list">Clique em um cliente devedor para visualizar a dívida, informar o valor a pagar e confirmar o recebimento.</div></div>
+      </section>
+      <section id="financeiro-relatorios-panel" class="card section-card finance-panel hidden">
+        <div class="section-head"><h3 class="section-title">Relatórios</h3><span class="pill">Visão Estratégica</span></div>
+        <div class="relatorios-central-note">Selecione um relatório na central <strong>Relatórios / Avisos</strong>. Os filtros, resultados e detalhes continuam nesta mesma área original.</div>
+        <section id="relatorio-cliente-panel" class="card section-card relatorio-panel hidden">
+          <div class="section-head"><h3 class="section-title">Histórico por Cliente</h3></div>
+          <div class="form-grid two-columns"><div class="field"><label for="relatorio-cliente-select">Selecionar Cliente</label><select id="relatorio-cliente-select"><option value="">Selecione</option></select></div></div>
+          <div id="relatorio-cliente-detalhe" class="entity-list"></div>
+        </section>
+        <section id="relatorio-venda-mes-panel" class="card section-card relatorio-panel hidden">
+          <div class="section-head"><h3 class="section-title">Venda do Mês</h3></div>
+          <div class="summary-grid">
+            <div class="card metric-card"><span class="metric-label">Mês Atual</span><strong id="relatorio-mes-atual" class="metric-value">R$ 0,00</strong></div>
+            <div class="card metric-card"><span class="metric-label">Mês Anterior</span><strong id="relatorio-mes-anterior" class="metric-value">R$ 0,00</strong></div>
+            <div class="card metric-card"><span class="metric-label">Variação</span><strong id="relatorio-mes-variacao" class="metric-value">0%</strong></div>
+          </div>
+        </section>
+        <section id="relatorio-recebimentos-cliente-panel" class="card section-card relatorio-panel hidden">
+          <div class="section-head"><h3 class="section-title">Recebimentos por Cliente</h3></div>
+          <div class="form-grid two-columns" style="margin-bottom:12px;">
+            <div class="field"><label for="rel-receb-cliente-select">Selecionar Cliente</label><select id="rel-receb-cliente-select"><option value="">Selecione</option></select></div>
+            <div class="field"><label for="rel-receb-data-ini">Data Inicial (opcional)</label><input id="rel-receb-data-ini" type="date" /></div>
+            <div class="field"><label for="rel-receb-data-fim">Data Final (opcional)</label><input id="rel-receb-data-fim" type="date" /></div>
+            <div class="field" style="display:flex;align-items:flex-end;"><button class="btn-primary" type="button" id="btn-gerar-rel-recebimentos">Gerar Relatório</button></div>
+          </div>
+          <div id="rel-receb-resultado" class="entity-list"></div>
+        </section>
+        <section id="relatorio-caixa-dia-panel" class="card section-card relatorio-panel hidden">
+          <div class="section-head"><h3 class="section-title">Caixa do Dia</h3></div>
+          <div class="summary-grid">
+            <div class="card metric-card"><span class="metric-label">Entradas</span><strong id="relatorio-caixa-entradas" class="metric-value">R$ 0,00</strong></div>
+            <div class="card metric-card"><span class="metric-label">Saídas</span><strong id="relatorio-caixa-saidas" class="metric-value">R$ 0,00</strong></div>
+            <div class="card metric-card"><span class="metric-label">Saldo Líquido</span><strong id="relatorio-caixa-saldo" class="metric-value">R$ 0,00</strong></div>
+          </div>
+          <div class="detail-card"><h4 class="recipe-title">Movimentações de Hoje</h4><div id="relatorio-caixa-movimentacoes" class="entity-list"></div></div>
+        </section>
+      </section>
+    </section>
+
+    <!-- FOLHA DE PAGAMENTO — com gaveta de origem -->
+    <section id="folha-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Folha de Pagamento</h2><p class="subtitle">Gestão de pagamentos de funcionários integrada ao fluxo de caixa</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Gerar Pagamento</h3><span class="pill">Lançamento automático no Financeiro</span></div>
+          <form id="folha-form">
+            <input type="hidden" id="folha-funcionario-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="folha-funcionario-nome">Funcionário</label><input id="folha-funcionario-nome" type="text" readonly /></div>
+              <div class="field"><label for="folha-salario-base">Salário Base</label><input id="folha-salario-base" type="number" min="0" step="0.01" value="0" readonly /></div>
+              <div class="field"><label for="folha-adicionais">Adicionais / Horas Extras</label><input id="folha-adicionais" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="folha-descontos">Descontos / Vales</label><input id="folha-descontos" type="number" min="0" step="0.01" value="0" /></div>
+              <div class="field"><label for="folha-vales-pendentes">Vales Pendentes (Auto)</label><input id="folha-vales-pendentes" type="number" min="0" step="0.01" value="0" readonly /></div>
+              <div class="field"><label for="folha-faltas-qtd">Faltas no Mês (Auto)</label><input id="folha-faltas-qtd" type="number" min="0" step="1" value="0" readonly style="background:#fffbeb;border-color:#f59e0b;" /></div>
+              <div class="field"><label for="folha-faltas-desconto">Desconto por Faltas (Auto)</label><input id="folha-faltas-desconto" type="number" min="0" step="0.01" value="0" readonly style="background:#fef2f2;border-color:#ef4444;" /></div>
+              <!-- v3.4: Licenças -->
+              <div class="field"><label for="folha-licenca-dias">Dias de Licença (Auto)</label><input id="folha-licenca-dias" type="number" min="0" step="1" value="0" readonly style="background:#fdf4ff;border-color:#c084fc;" /></div>
+              <div class="field"><label for="folha-licenca-desconto">Desconto por Licença (Auto)</label><input id="folha-licenca-desconto" type="number" min="0" step="0.01" value="0" readonly style="background:#fdf4ff;border-color:#c084fc;" /></div>
+              <div class="field"><label for="folha-mes-referencia">Mês de Referência</label><select id="folha-mes-referencia" required><option value="">Selecione o mês</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select></div>
+              <div class="field"><label for="folha-ano-referencia">Ano de Referência</label><input id="folha-ano-referencia" type="number" min="2020" max="2099" required /></div>
+              <div class="field"><label for="folha-data-pagamento">Data do Pagamento</label><input id="folha-data-pagamento" type="date" required /></div>
+              <div class="field"><label for="folha-total">Valor Líquido</label><input id="folha-total" type="number" min="0" step="0.01" value="0" readonly /></div>
+              <div class="field"><label for="folha-gaveta-origem">Gaveta de Origem</label><select id="folha-gaveta-origem"><option value="Dinheiro">Gaveta Dinheiro</option><option value="Pix">Gaveta Pix</option><option value="Tesoureiro">Gaveta Tesoureiro</option></select></div>
+            </div>
+            <!-- HISTÓRICO RÁPIDO v1.3.2 -->
+            <div id="folha-historico-rapido" style="display:none;margin-bottom:14px;padding:12px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:14px;">
+              <p style="margin:0 0 8px;font-weight:700;font-size:0.88rem;color:#0369a1;">&#128337; Últimos pagamentos deste funcionário:</p>
+              <div id="folha-historico-lista" style="font-size:0.85rem;color:#334155;"></div>
+            </div>
+            <!-- v3.4: status licenca -->
+            <div id="folha-licenca-status" style="display:none;padding:10px 14px;background:#fdf4ff;border:1px solid #c084fc;border-radius:10px;font-size:0.88rem;color:#7e22ce;margin-bottom:12px;"></div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-confirmar-folha">Confirmar e Lançar no Financeiro</button><button class="btn-secondary" type="button" id="btn-cancelar-folha">Cancelar</button></div>
+          </form>
+        </section>
+        <section class="card section-card">
+          <div class="section-head">
+            <h3 class="section-title">Funcionários Cadastrados</h3>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <span id="folha-funcionarios-total" class="pill">0 itens</span>
+              <!-- v3.4: Lançar Licença -->
+              <button class="btn-secondary" type="button" id="btn-lancar-licenca" style="font-size:0.88rem;padding:8px 14px;background:#fdf4ff;border-color:#c084fc;color:#7e22ce;">&#128197; Lançar Licença</button>
+            </div>
+          </div>
+          <div id="folha-funcionarios-lista" class="entity-list"></div>
+          <!-- v3.4: Lista de licencas recentes -->
+          <div class="detail-card" style="margin-top:16px;">
+            <h4 class="recipe-title" style="color:#7e22ce;">&#128197; Licenças / Afastamentos Recentes</h4>
+            <div id="licencas-recentes-lista" class="entity-list"></div>
+          </div>
+          <div class="detail-card"><h4 class="recipe-title">Pagamentos Gerados</h4><div id="folha-pagamentos-lista" class="entity-list"></div></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- VALES — com gaveta de origem -->
+    <section id="vales-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Vales e Adiantamentos</h2><p class="subtitle">Registre vales concedidos aos funcionários</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Novo Vale</h3><span class="pill">Lançamento automático no Financeiro</span></div>
+          <form id="vale-form">
+            <div class="form-grid two-columns">
+              <div class="field"><label for="vale-funcionario-id">Funcionário</label><select id="vale-funcionario-id" required><option value="">Selecione</option></select></div>
+              <div class="field"><label for="vale-valor">Valor do Vale</label><input id="vale-valor" type="number" min="0.01" step="0.01" value="0" required /></div>
+              <div class="field"><label for="vale-data">Data do Vale</label><input id="vale-data" type="date" required /></div>
+              <div class="field"><label for="vale-gaveta-origem">Gaveta de Origem</label><select id="vale-gaveta-origem"><option value="Dinheiro">Gaveta Dinheiro</option><option value="Pix">Gaveta Pix</option><option value="Tesoureiro">Gaveta Tesoureiro</option></select></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-registrar-vale">Registrar Vale</button><button class="btn-secondary" type="button" id="btn-cancelar-vale">Cancelar</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Vales Pendentes</h3><span id="vales-total" class="pill">0 itens</span></div><div id="vales-lista" class="entity-list"></div></section>
+        <!-- Últimos Vales com Estorno v3.3 -->
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">↩ Últimos Vales</h3><span class="pill">Estorno seguro</span></div>
+          <div id="ultimos-vales-lista" class="entity-list"><div class="empty-list">Carregando...</div></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- MODAL DE TRANSFERÊNCIA -->
+    <div id="modal-transferir" class="modal hidden" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+      <div class="card" style="width:90%;max-width:400px;padding:24px;border-radius:12px;">
+        <h3 style="margin-top:0;margin-bottom:16px;">Transferência entre Contas</h3>
+        <div class="form-grid">
+          <div class="field"><label for="transfer-valor">Valor (R$)</label><input id="transfer-valor" type="number" min="0.01" step="0.01" placeholder="0.00" /></div>
+          <div class="field"><label for="transfer-origem">Origem</label><select id="transfer-origem"><option value="">Selecione</option><option value="Caixa Físico (Dinheiro)">Caixa Físico (Dinheiro)</option><option value="Caixa Digital (Pix/Cartão)">Caixa Digital (Pix/Cartão)</option><option value="Tesouraria (Gaudencio)">Tesouraria (Gaudencio)</option></select></div>
+          <div class="field"><label for="transfer-destino">Destino</label><select id="transfer-destino"><option value="">Selecione</option><option value="Caixa Físico (Dinheiro)">Caixa Físico (Dinheiro)</option><option value="Caixa Digital (Pix/Cartão)">Caixa Digital (Pix/Cartão)</option><option value="Tesouraria (Gaudencio)">Tesouraria (Gaudencio)</option></select></div>
+        </div>
+        <div class="form-actions" style="margin-top:16px;gap:8px;">
+          <button class="btn-primary" type="button" id="btn-confirmar-transferir">Confirmar</button>
+          <button class="btn-secondary" type="button" id="btn-cancelar-transferir">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIGURAÇÕES -->
+    <section id="configuracoes-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Configurações</h2><p class="subtitle">Backup, Restauração e Integrações</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Gestão de Dados</h3><span class="pill">Backup e Restauração</span></div>
+          <div class="form-grid two-columns">
+            <div class="field"><button class="btn-primary" type="button" id="btn-exportar-total">Exportar Todos os Dados (JSON)</button></div>
+            <div class="field"><button class="btn-secondary" type="button" id="btn-importar-total">Importar Todos os Dados</button><input type="file" id="file-importar-total" accept=".json" style="display:none;" /></div>
+            <div class="field"><button class="btn-secondary" type="button" id="btn-exportar-clientes">Exportar Clientes (CSV)</button></div>
+            <div class="field"><button class="btn-secondary" type="button" id="btn-exportar-produtos">Exportar Produtos (CSV)</button></div>
+            <div class="field"><button class="btn-secondary" type="button" id="btn-exportar-funcionarios">Exportar Funcionários (CSV)</button></div>
+          </div>
+        </section>
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Meta de Vendas Mensal</h3><span class="pill">Acompanhamento</span></div>
+          <div class="form-grid two-columns">
+            <div class="field"><label for="meta-vendas-valor">Meta Mensal (R$)</label><input id="meta-vendas-valor" type="number" min="0" step="0.01" value="0" /></div>
+            <div class="field"><button class="btn-primary" type="button" id="btn-salvar-meta-vendas" style="margin-top:24px;">Salvar Meta</button></div>
+          </div>
+          <div id="meta-vendas-progresso" style="margin-top:12px;padding:12px;background:#f0fdf4;border-radius:10px;"></div>
+        </section>
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Integração Telegram</h3><span class="pill">Notificações em Tempo Real</span></div>
+          <form id="telegram-form">
+            <div class="form-grid two-columns">
+              <div class="field"><label for="telegram-token">Token do Bot</label><input id="telegram-token" type="text" placeholder="Insira o token do bot" /></div>
+              <div class="field"><label for="telegram-chat-id">Chat ID Fábrica (Principal)</label><input id="telegram-chat-id" type="text" placeholder="Chat ID principal" /></div>
+              <div class="field"><label for="telegram-chat-id-2">Chat ID Pessoal (Secundário)</label><input id="telegram-chat-id-2" type="text" placeholder="Chat ID secundário (opcional)" /></div>
+              <div class="field"><label class="checkbox-line"><input type="checkbox" id="telegram-ativar" /> Ativar Notificações</label></div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-primary" type="button" id="btn-testar-telegram">Testar Conexão</button>
+              <button class="btn-secondary" type="submit" id="btn-salvar-telegram">Salvar Configurações</button>
+            </div>
+          </form>
+          <div id="telegram-status" class="empty-list" style="margin-top:16px;"></div>
+        </section>
+
+        <!-- TEMPLATES DE COMUNICAÇÃO v1.3 -->
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Templates de Comunicação</h3><span class="pill">WhatsApp Devedores</span></div>
+          <p style="font-size:0.82rem;color:#64748b;margin-bottom:14px;">Variáveis disponíveis: <code>{nome_cliente}</code>, <code>{valor_debito}</code>, <code>{data_hoje}</code></p>
+          <div class="field" style="margin-bottom:16px;">
+            <label for="template-formal">🟢 Template Formal</label>
+            <textarea id="template-formal" rows="4" placeholder="Ex: Prezado(a) {nome_cliente}, informamos que há um débito de {valor_debito} em aberto..."></textarea>
+          </div>
+          <div class="field" style="margin-bottom:16px;">
+            <label for="template-amigavel">🔵 Template Amigável</label>
+            <textarea id="template-amigavel" rows="4" placeholder="Ex: Oi {nome_cliente}! Tudo bem? Passando pra avisar que tem um valor de {valor_debito} pendente..."></textarea>
+          </div>
+          <div class="field" style="margin-bottom:16px;">
+            <label for="template-informativo">📄 Template Atualização/Informativo</label>
+            <textarea id="template-informativo" rows="4" placeholder="Ex: {nome_cliente}, segue atualização do seu saldo em {data_hoje}: R$ {valor_debito}."></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" type="button" id="btn-salvar-templates">Salvar Templates</button>
+          </div>
+          <div id="templates-status" style="margin-top:10px;font-size:0.85rem;"></div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- FECHAMENTO DE CAIXA v1.8 -->
+    <section id="fechamento-caixa-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Fechamento de Caixa</h2><p class="subtitle">Conferência por Gaveta</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Resumo do Dia</h3><span class="pill">Entradas e Saídas</span></div>
+          <div class="form-grid two-columns">
+            <div class="field"><label>Total de Entradas:</label><strong id="fechamento-entradas" style="color:#27ae60;">R$ 0,00</strong></div>
+            <div class="field"><label>Total de Saídas:</label><strong id="fechamento-saidas" style="color:#e74c3c;">R$ 0,00</strong></div>
+            <div class="field" style="grid-column:1/-1;"><label>Saldo Esperado (Total):</label><strong id="fechamento-saldo-esperado" style="color:#3498db;">R$ 0,00</strong></div>
+          </div>
+        </section>
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Conferência por Gaveta</h3><span class="pill">Digite o valor contado</span></div>
+          <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+            <thead><tr style="background:#1e3a5f;color:#fff;"><th style="padding:8px;text-align:left;">Gaveta</th><th style="padding:8px;text-align:right;">Esperado</th><th style="padding:8px;text-align:right;">Contado</th><th style="padding:8px;text-align:right;">Diferença</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">💵 Dinheiro (Gaveta)</td>
+                <td style="padding:8px;text-align:right;"><strong id="fechamento-esperado-dinheiro">R$ 0,00</strong></td>
+                <td style="padding:8px;text-align:right;"><input id="fechamento-dinheiro-contado" type="number" min="0" step="0.01" placeholder="0,00" style="width:100px;text-align:right;padding:4px 6px;border:1px solid #cbd5e1;border-radius:6px;" /></td>
+                <td style="padding:8px;text-align:right;"><strong id="fechamento-dif-dinheiro">-</strong></td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">📲 Pix (Banco)</td>
+                <td style="padding:8px;text-align:right;"><strong id="fechamento-esperado-pix">R$ 0,00</strong></td>
+                <td style="padding:8px;text-align:right;"><input id="fechamento-pix-contado" type="number" min="0" step="0.01" placeholder="0,00" style="width:100px;text-align:right;padding:4px 6px;border:1px solid #cbd5e1;border-radius:6px;" /></td>
+                <td style="padding:8px;text-align:right;"><strong id="fechamento-dif-pix">-</strong></td>
+              </tr>
+              <tr>
+                <td style="padding:8px;">🏛️ Tesoureiro</td>
+                <td style="padding:8px;text-align:right;"><strong id="fechamento-esperado-tesoureiro">R$ 0,00</strong></td>
+                <td style="padding:8px;text-align:right;"><input id="fechamento-tesoureiro-contado" type="number" min="0" step="0.01" style="width:100px;text-align:right;padding:4px 6px;border:1px solid #cbd5e1;border-radius:6px;background:#f1f5f9;" readonly /></td>
+                <td style="padding:8px;text-align:right;"><strong style="color:#64748b;">Automático</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="field" style="margin-top:16px;"><label>Status Geral:</label><strong id="fechamento-diferenca" style="font-size:1.2rem;">-</strong></div>
+          <div class="form-actions"><button class="btn-primary" type="button" id="btn-fechamento-confirmar">Fechar Caixa</button><button class="btn-secondary" type="button" id="btn-compartilhar-fechamento" style="display:none;background:#10b981;color:#fff;">📲 Enviar para WhatsApp</button><button class="btn-secondary btn-back" type="button" data-back="dashboard-screen">Cancelar</button></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- DADOS INTERNOS DO RELATÓRIO DE FECHAMENTO (hidden, usados pelo JS) -->
+    <span id="relatorio-data-hora" style="display:none;"></span>
+    <span id="relatorio-movimentacao" style="display:none;"></span>
+    <span id="relatorio-estoque" style="display:none;"></span>
+    <span id="relatorio-financeiro" style="display:none;"></span>
+
+    <!-- CENTRAL DE RELATÓRIOS / AVISOS -->
+    <section id="relatorio-vendas-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Relatórios / Avisos</h2><p class="subtitle">Acesso centralizado às consultas existentes do sistema</p></header>
+
+      <div id="relatorios-central-inicio">
+        <section class="card section-card relatorios-central-intro">
+          <div class="section-head"><div><h3 class="section-title">Central de Relatórios</h3><p class="relatorios-central-help">Escolha uma categoria para abrir o relatório original, com os mesmos filtros, cálculos, detalhes e impressões.</p></div><span class="pill">Consultas existentes</span></div>
+        </section>
+        <div id="relatorios-central-categorias" class="dashboard-grid relatorios-central-grid">
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="financeiro"><span class="card-icon icon-orange">💰</span><span class="card-title">Relatórios Financeiros</span><span class="card-text">Caixa, DRE, custos e rentabilidade</span></button>
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="vendas"><span class="card-icon icon-blue">📈</span><span class="card-title">Relatórios de Vendas</span><span class="card-text">Períodos, produtos, mês e cidades</span></button>
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="funcionarios"><span class="card-icon icon-teal">👥</span><span class="card-title">Relatórios de Funcionários</span><span class="card-text">Resumo mensal da folha</span></button>
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="clientes"><span class="card-icon icon-purple">👤</span><span class="card-title">Relatórios de Clientes</span><span class="card-text">Histórico e recebimentos</span></button>
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="avisos"><span class="card-icon icon-yellow">🔔</span><span class="card-title">Avisos aos Clientes</span><span class="card-text">Lista de envio e WhatsApp manual</span></button>
+          <button class="card dashboard-card" type="button" data-relatorios-categoria="demais"><span class="card-icon icon-slate">📚</span><span class="card-title">Demais Relatórios</span><span class="card-text">Consultas de estoque, produção, patrimônio e controles</span></button>
+        </div>
+      </div>
+
+      <div id="relatorios-central-detalhe" class="hidden" aria-live="polite"></div>
+
+      <!-- Painel: Relatórios de Vendas v4.1 -->
+      <div id="painel-relatorios" class="avisos-tab-painel hidden">
+        <div class="relatorios-central-pane-head">
+          <div>
+            <h3 class="section-title">Relatórios de Vendas</h3>
+            <p class="relatorios-central-help">Resumo, análise matricial e histórico detalhado em uma única consulta.</p>
+          </div>
+          <button class="btn-secondary" type="button" id="btn-voltar-central-relatorios">← Voltar às categorias</button>
+        </div>
+
+        <div class="relatorios-vendas-layout">
+          <!-- ÁREA 1 — RESUMO DAS VENDAS -->
+          <section class="card section-card relatorios-vendas-area">
+            <div class="section-head relatorio-vendas-area-head">
+              <div>
+                <h3 class="section-title">📊 Resumo das Vendas</h3>
+                <p class="relatorios-central-help">Indicadores líquidos já apurados pela versão 4.0.</p>
+              </div>
+            </div>
+            <div class="relatorio-vendas-periodo-acoes">
+              <button class="btn-secondary" type="button" id="relatorio-vendas-hoje">Vendas de Hoje</button>
+              <button class="btn-secondary" type="button" id="relatorio-vendas-mes">Vendas do Mês</button>
+            </div>
+            <div id="relatorio-vendas-detalhe" class="relatorio-vendas-detalhe">Selecione um período</div>
+          </section>
+
+          <!-- ÁREA 2 — ANÁLISE MATRICIAL -->
+          <section class="card section-card relatorios-vendas-area relatorio-matriz-area">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">📦 Análise Matricial</h3>
+                <p class="relatorios-central-help">Produto × período, com totais líquidos e calendário completo do mês.</p>
+              </div>
+              <span class="pill">Produto × Período</span>
+            </div>
+
+            <div class="form-grid two-columns relatorio-matriz-filtros">
+              <div class="field">
+                <label for="matriz-ano">Ano</label>
+                <input id="matriz-ano" type="number" min="2020" max="2035" />
+              </div>
+              <div class="field">
+                <label for="matriz-mes">Mês (deixe vazio para ver o ano todo)</label>
+                <select id="matriz-mes">
+                  <option value="">— Ano completo —</option>
+                  <option value="01">Janeiro</option>
+                  <option value="02">Fevereiro</option>
+                  <option value="03">Março</option>
+                  <option value="04">Abril</option>
+                  <option value="05">Maio</option>
+                  <option value="06">Junho</option>
+                  <option value="07">Julho</option>
+                  <option value="08">Agosto</option>
+                  <option value="09">Setembro</option>
+                  <option value="10">Outubro</option>
+                  <option value="11">Novembro</option>
+                  <option value="12">Dezembro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="matriz-tabs">
+              <button class="btn-secondary matriz-tab-btn active" id="btn-matriz-qtd" type="button">📦 POR QUANTIDADE</button>
+              <button class="btn-secondary matriz-tab-btn" id="btn-matriz-fat" type="button">💰 POR FATURAMENTO R$</button>
+            </div>
+
+            <div id="matriz-vendas-container" class="matriz-vendas-container">
+              <div class="empty-list">Selecione o ano e clique em uma aba para gerar a análise.</div>
+            </div>
+          </section>
+
+          <!-- ÁREA 3 — HISTÓRICO DETALHADO -->
+          <section class="card section-card relatorios-vendas-area historico-vendas-area">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">🛒 Histórico Detalhado das Vendas</h3>
+                <p class="relatorios-central-help">Consulta somente leitura por data, cliente e produto.</p>
+              </div>
+            </div>
+            <div class="historico-vendas-controles">
+              <button class="btn-secondary" type="button" id="historico-vendas-dia-anterior">◀ Dia anterior</button>
+              <div class="historico-vendas-data-campo">
+                <label for="historico-vendas-data">Data selecionada</label>
+                <input id="historico-vendas-data" type="date" />
+              </div>
+              <button class="btn-secondary" type="button" id="historico-vendas-proximo-dia">Próximo dia ▶</button>
+              <div class="historico-vendas-pesquisa-campo">
+                <label for="historico-vendas-pesquisa">🔎 Buscar cliente ou produto</label>
+                <input id="historico-vendas-pesquisa" type="search" placeholder="Digite para filtrar os resultados exibidos" autocomplete="off" />
+              </div>
+            </div>
+            <div id="historico-vendas-data-legenda" class="historico-vendas-data-legenda"></div>
+            <div id="historico-vendas-resumo" class="historico-vendas-resumo"></div>
+            <div id="historico-vendas-lista" class="historico-vendas-lista">
+              <div class="empty-list">Selecione uma data para consultar as vendas.</div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Painel: Avisos aos Clientes (função original preservada) -->
+      <div id="painel-avisos" class="avisos-tab-painel hidden">
+        <div class="relatorios-central-pane-head"><div><h3 class="section-title">Avisos aos Clientes</h3><p class="relatorios-central-help">A funcionalidade original de comunicação foi preservada.</p></div><button class="btn-secondary" type="button" id="btn-voltar-central-avisos">← Voltar às categorias</button></div>
+        <div class="entity-layout">
+
+          <!-- Card: Criar Aviso -->
+          <section class="card section-card">
+            <div class="section-head"><h3 class="section-title">📢 Criar Aviso</h3><span class="pill">WhatsApp Manual</span></div>
+            <div class="field">
+              <label for="aviso-titulo">Título (opcional)</label>
+              <input id="aviso-titulo" type="text" placeholder="Ex: Promoção de Garrafão" />
+            </div>
+            <div class="field">
+              <label for="aviso-mensagem">Mensagem</label>
+              <textarea id="aviso-mensagem" rows="5" placeholder="Digite a mensagem aqui. Use {nome_cliente} para personalizar."></textarea>
+              <small style="color:var(--muted);font-size:0.85rem;">Dica: use <strong>{nome_cliente}</strong> para inserir o nome automaticamente.</small>
+            </div>
+            <div class="form-actions">
+              <button class="btn-primary" type="button" id="btn-gerar-lista-envio">📋 Gerar Lista de Envio</button>
+              <button class="btn-danger" type="button" id="btn-finalizar-aviso">🔒 Finalizar Aviso</button>
+            </div>
+          </section>
+
+          <!-- Card: Lista de Envio -->
+          <section class="card section-card">
+            <div class="section-head">
+              <h3 class="section-title">Lista de Envio</h3>
+              <span id="avisos-lista-total" class="pill">0 clientes</span>
+            </div>
+            <div id="avisos-lista-clientes" class="entity-list">
+              <div class="empty-list">Crie uma mensagem e clique em "Gerar Lista de Envio".</div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+      <!-- /painel-avisos -->
+
+    </section>
+
+    <!-- CONTAS A PAGAR -->
+    <section id="contas-pagar-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Contas a Pagar</h2><p class="subtitle">Gerenciamento de compras a prazo</p></header>
+      <div class="entity-layout">
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Contas Pendentes</h3><span id="contas-pagar-total" class="pill">0 itens</span></div><div id="contas-pagar-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <!-- DRE — DEMONSTRATIVO DE RESULTADO -->
+    <section id="dre-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>DRE — Demonstrativo de Resultado</h2><p class="subtitle">Análise financeira mensal e anual</p></header>
+      <div class="card section-card">
+        <div class="finance-tabs">
+          <button class="card finance-tab-card" id="btn-dre-mensal" type="button">📅 DRE MENSAL</button>
+          <button class="card finance-tab-card" id="btn-dre-anual" type="button">📊 DRE ANUAL</button>
+          <button class="card finance-tab-card" id="btn-dre-imprimir" type="button">🖨️ IMPRIMIR / PDF</button>
+        </div>
+        <!-- Regime Toggle -->
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+          <button id="btn-dre-regime-competencia" type="button" class="btn-primary" style="flex:1;min-width:140px;">📊 Competência</button>
+          <button id="btn-dre-regime-caixa" type="button" class="btn-secondary" style="flex:1;min-width:140px;">💵 Caixa</button>
+        </div>
+        <div id="dre-regime-label" style="font-size:0.85rem;color:#6b7280;margin-bottom:12px;padding:8px;background:#f0f4ff;border-radius:8px;">📊 <strong>Regime de Competência</strong> — Receita = Vendas realizadas (tabela vendas). Despesas = Todos os custos gerados.</div>
+        <div class="form-grid two-columns" style="margin-bottom:16px;">
+          <div class="field"><label for="dre-mes-select">Mês (AAAA-MM)</label><input id="dre-mes-select" type="month" /></div>
+          <div class="field"><label for="dre-ano-select">Ano</label><input id="dre-ano-select" type="number" min="2020" max="2030" /></div>
+        </div>
+        <div id="dre-mensal-conteudo"></div>
+        <div id="dre-anual-conteudo" style="margin-top:24px;"></div>
+      </div>
+    </section>
+
+    <!-- CIDADES -->
+    <section id="cidades-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="cadastros-screen" type="button">VOLTAR</button><h2>Cadastro de Cidades</h2></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Nova Cidade</h3><span class="pill">CRUD completo</span></div>
+          <form id="cidade-form">
+            <input type="hidden" id="cidade-id" />
+            <div class="form-grid two-columns">
+              <div class="field"><label for="cidade-nome">Nome da Cidade</label><input id="cidade-nome" type="text" required /></div>
+              <div class="field"><label for="cidade-estado">Estado (UF)</label><input id="cidade-estado" type="text" value="CE" maxlength="2" /></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-cidade">Salvar Cidade</button><button class="btn-secondary" type="button" id="btn-cancelar-cidade">Cancelar Edição</button></div>
+          </form>
+        </section>
+        <section class="card section-card"><div class="section-head"><h3 class="section-title">Cidades Cadastradas</h3><span id="cidades-total" class="pill">0 itens</span></div><div id="cidades-lista" class="entity-list"></div></section>
+      </div>
+    </section>
+
+    <!-- RELATÓRIO DE VENDAS POR CIDADE -->
+    <section id="relatorio-cidades-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Vendas por Cidade</h2><p class="subtitle">Relatório mensal e anual por cidade</p></header>
+      <div class="card section-card">
+        <div class="finance-tabs">
+          <button class="card finance-tab-card" id="btn-rel-cidade-mensal" type="button">📅 MENSAL</button>
+          <button class="card finance-tab-card" id="btn-rel-cidade-anual" type="button">📊 ANUAL</button>
+          <button class="card finance-tab-card" id="btn-rel-cidade-imprimir" type="button">🖨️ IMPRIMIR / PDF</button>
+        </div>
+        <div class="form-grid two-columns" style="margin-bottom:16px;">
+          <div class="field"><label for="rel-cidade-mes-select">Mês (AAAA-MM)</label><input id="rel-cidade-mes-select" type="month" /></div>
+          <div class="field"><label for="rel-cidade-ano-select">Ano</label><input id="rel-cidade-ano-select" type="number" min="2020" max="2030" /></div>
+        </div>
+        <div id="rel-cidade-mensal-conteudo"></div>
+        <div id="rel-cidade-anual-conteudo" style="margin-top:24px;"></div>
+        <div id="rel-cidade-detalhamento" class="rel-cidade-detalhamento hidden" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- COMODATO DE GARRAFÕES v1.6 -->
+    <section id="comodato-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Comodato de Garrafões</h2><p class="subtitle">Controle de vasilhames em posse dos clientes</p></header>
+      <div class="entity-layout">
+        <!-- Seleção de Cliente -->
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Selecionar Cliente</h3><span class="pill">Ficha de Comodato</span></div>
+          <div class="form-grid two-columns">
+            <div class="field" style="grid-column:1/-1;"><label for="comodato-cliente-select">Cliente</label><select id="comodato-cliente-select"><option value="">Selecione um cliente...</option></select></div>
+          </div>
+        </section>
+        <!-- Ficha do Cliente -->
+        <section id="comodato-ficha-section" class="card section-card" style="display:none;">
+          <div class="section-head"><h3 class="section-title" id="comodato-cliente-nome-titulo">Ficha do Cliente</h3><span class="pill">Saldo Atual</span></div>
+          <div id="comodato-alerta-baixo-movimento" style="display:none;margin-bottom:12px;padding:10px 14px;background:#fef3c7;border:1px solid #f59e0b;border-radius:12px;font-size:0.9rem;color:#92400e;">⚠️ BAIXO MOVIMENTO: Este cliente está com garrafões há mais de 60 dias sem registrar nenhuma devolução.</div>
+          <div class="form-grid two-columns" style="margin-bottom:16px;">
+            <div class="card metric-card" style="background:#f0fdf4;"><span class="metric-label">🏺 Garrafões Novos</span><strong id="comodato-saldo-novo" class="metric-value">0</strong></div>
+            <div class="card metric-card" style="background:#fefce8;"><span class="metric-label">🏺 Garrafões Velhos</span><strong id="comodato-saldo-velho" class="metric-value">0</strong></div>
+          </div>
+          <div style="margin-bottom:16px;text-align:center;"><button class="btn-primary" type="button" id="btn-whatsapp-comodato" style="background:#25D366;border:none;color:#fff;padding:10px 20px;border-radius:12px;font-size:0.95rem;font-weight:600;cursor:pointer;">&#x1F4F2; Atualizar Cliente</button></div>
+          <!-- Formulário de Movimentação -->
+          <div class="section-head" style="margin-top:8px;"><h3 class="section-title">Nova Movimentação</h3></div>
+          <form id="comodato-form">
+            <div class="form-grid two-columns">
+              <div class="field"><label for="comodato-data">Data</label><input id="comodato-data" type="date" required /></div>
+              <div class="field"><label for="comodato-acao">Ação</label><select id="comodato-acao" required><option value="saida">[+] Saída (Empréstimo)</option><option value="entrada">[-] Entrada (Retorno)</option></select></div>
+              <div class="field"><label for="comodato-tipo">Tipo de Garrafão</label><select id="comodato-tipo" required><option value="Novo">Garrafão Novo</option><option value="Velho">Garrafão Velho</option></select></div>
+              <div class="field"><label for="comodato-quantidade">Quantidade</label><input id="comodato-quantidade" type="number" min="1" step="1" value="1" required /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="comodato-observacao">Observação</label><input id="comodato-observacao" type="text" placeholder="Observação livre..." /></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit">Registrar Movimentação</button><button class="btn-secondary" type="button" id="btn-cancelar-comodato">Cancelar</button></div>
+          </form>
+          <!-- Histórico -->
+          <div class="section-head" style="margin-top:16px;"><h3 class="section-title">Histórico de Movimentações</h3><span id="comodato-historico-total" class="pill">0 registros</span></div>
+          <div id="comodato-historico-lista" class="entity-list"></div>
+        </section>
+        <!-- Lista Geral de Clientes com Comodato -->
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Todos os Clientes com Comodato</h3><span id="comodato-geral-total" class="pill">0 clientes</span></div>
+          <div id="comodato-geral-lista" class="entity-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- DOCUMENTOS/ALVARAS v1.7.1 - ESCADA DE PRIORIDADES -->
+    <section id="documentos-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>Documentos / Alvarás</h2><p class="subtitle">Escada de Prioridades &bull; Monitorização via Telegram</p></header>
+      <div class="entity-layout">
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Cadastrar / Editar Documento</h3><span class="pill">Escada de Prioridades</span></div>
+          <form id="documento-form">
+            <input type="hidden" id="documento-id" />
+            <div class="form-grid two-columns">
+              <div class="field" style="grid-column:1/-1;"><label for="documento-nome">Nome do Documento</label><input id="documento-nome" type="text" placeholder="Ex: Alvará Sanitário Estadual" required /></div>
+              <div class="field"><label for="documento-nivel">Nível de Prioridade</label><input id="documento-nivel" type="number" min="1" max="99" value="1" placeholder="1 = Topo (mais importante)" required /></div>
+              <div class="field"><label for="documento-data-atualizacao">Data de Atualização</label><input id="documento-data-atualizacao" type="date" /></div>
+              <div class="field"><label for="documento-data-vencimento">Data de Vencimento</label><input id="documento-data-vencimento" type="date" /></div>
+              <div class="field" style="grid-column:1/-1;"><label for="documento-observacao">Observação</label><input id="documento-observacao" type="text" placeholder="Órgão emissor, número do processo..." /></div>
+            </div>
+            <div class="form-actions"><button class="btn-primary" type="submit" id="btn-salvar-documento">Salvar Documento</button><button class="btn-secondary" type="button" id="btn-cancelar-documento">Cancelar</button></div>
+          </form>
+        </section>
+        <section class="card section-card">
+          <div class="section-head"><h3 class="section-title">Escada de Prioridades</h3><span id="documentos-total" class="pill">0 documentos</span></div>
+          <div style="margin-bottom:12px;font-size:0.82rem;color:#6b7280;">
+            <span style="display:inline-block;width:12px;height:12px;background:#22c55e;border-radius:3px;margin-right:4px;"></span>Em dia &nbsp;
+            <span style="display:inline-block;width:12px;height:12px;background:#f59e0b;border-radius:3px;margin-right:4px;"></span>Alerta (&lt;30 dias / Topo em risco) &nbsp;
+            <span style="display:inline-block;width:12px;height:12px;background:#ef4444;border-radius:3px;margin-right:4px;"></span>Vencido
+          </div>
+          <div id="documentos-escada-container" style="padding-bottom:16px;"></div>
+        </section>
+      </div>
+    </section>
+
+
+    <!-- ===== GESTÃO DE PESSOAS HUB v2.2 ===== -->
+    <section id="gestao-pessoas-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>👥 Gestão de Pessoas</h2><p class="subtitle">Selecione o módulo desejado</p></header>
+      <div class="container">
+        <div class="dashboard-grid" style="margin-top:24px;">
+          <button class="card dashboard-card" id="btn-gp-folha" type="button"><span class="card-icon icon-teal">📋</span><span class="card-title">Folha de Pagamento</span><span class="card-text">Salários e holerites</span></button>
+          <button class="card dashboard-card" id="btn-gp-vales" type="button"><span class="card-icon icon-orange">💸</span><span class="card-title">Vales e Adiantamentos</span><span class="card-text">Registro de adiantamentos</span></button>
+          <button class="card dashboard-card" id="btn-gp-ferias" type="button"><span class="card-icon icon-blue">🏖️</span><span class="card-title">Férias / 13º / Extras</span><span class="card-text">Pagamentos especiais</span></button>
+          <button class="card dashboard-card" id="btn-gp-faltas" type="button"><span class="card-icon icon-yellow">📅</span><span class="card-title">Lançar Faltas</span><span class="card-text">Registro rápido de faltas</span></button>
+          <button class="card dashboard-card" id="btn-gp-avulso" type="button"><span class="card-icon icon-purple">🚚</span><span class="card-title">Mão de Obra Avulsa</span><span class="card-text">Pagamentos sem cadastro</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FÉRIAS / 13º / EXTRAS v2.2 ===== -->
+    <section id="ferias-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="gestao-pessoas-screen" type="button">VOLTAR</button><h2>🏖️ Férias / 13º / Extras</h2><p class="subtitle">Pagamentos especiais de funcionários</p></header>
+      <div class="container">
+        <div class="section-card">
+          <h3>Novo Pagamento Especial</h3>
+          <form id="ferias-form">
+            <div class="field">
+              <label>Funcionário</label>
+              <select id="ferias-funcionario-id" required>
+                <option value="">Selecione o funcionário...</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Tipo de Pagamento</label>
+              <select id="ferias-tipo" required>
+                <option value="Férias">🏖️ Férias</option>
+                <option value="13º Salário">🎁 13º Salário</option>
+                <option value="Hora Extra">⏰ Hora Extra</option>
+                <option value="Bônus">⭐ Bônus</option>
+                <option value="Outro">📝 Outro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Período / Referência (Ex: Férias 25/26)</label>
+              <input type="text" id="ferias-periodo" placeholder="Ex: Férias Jan-Fev 2025" required />
+            </div>
+            <div class="field">
+              <label>Valor (R$)</label>
+              <input type="number" id="ferias-valor" min="0.01" step="0.01" required />
+            </div>
+            <div class="field">
+              <label>Gaveta de Saída</label>
+              <select id="ferias-gaveta" required>
+                <option value="Dinheiro">Gaveta Dinheiro</option>
+                <option value="Pix">Gaveta Pix</option>
+                <option value="Tesoureiro">Gaveta Tesoureiro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Data</label>
+              <input type="date" id="ferias-data" required />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">✅ Confirmar Pagamento</button>
+            </div>
+          </form>
+        </div>
+        <div class="section-card" style="margin-top:16px;">
+          <h3>Histórico de Pagamentos Especiais</h3>
+          <div id="ferias-lista"><div class="empty-list">Nenhum pagamento especial registrado.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MÃO DE OBRA AVULSA v2.2 ===== -->
+    <section id="avulso-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="gestao-pessoas-screen" type="button">VOLTAR</button><h2>🚚 Mão de Obra Avulsa</h2><p class="subtitle">Pagamentos para pessoas não cadastradas</p></header>
+      <div class="container">
+        <div class="section-card">
+          <h3>Novo Pagamento Avulso</h3>
+          <form id="avulso-form">
+            <div class="field">
+              <label>Nome / Serviço Prestado</label>
+              <input type="text" id="avulso-nome" placeholder="Ex: João - Descarrego de caminhão" required />
+            </div>
+            <div class="field">
+              <label>Valor (R$)</label>
+              <input type="number" id="avulso-valor" min="0.01" step="0.01" required />
+            </div>
+            <div class="field">
+              <label>Gaveta de Saída</label>
+              <select id="avulso-gaveta" required>
+                <option value="Dinheiro">Gaveta Dinheiro</option>
+                <option value="Pix">Gaveta Pix</option>
+                <option value="Tesoureiro">Gaveta Tesoureiro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Data</label>
+              <input type="date" id="avulso-data" required />
+            </div>
+            <div class="field">
+              <label>Observação (opcional)</label>
+              <input type="text" id="avulso-obs" placeholder="Detalhes do serviço..." />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">✅ Confirmar Pagamento</button>
+            </div>
+          </form>
+        </div>
+        <div class="section-card" style="margin-top:16px;">
+          <h3>Histórico de Pagamentos Avulsos</h3>
+          <div id="avulso-lista"><div class="empty-list">Nenhum pagamento avulso registrado.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUB COMPRAS v2.3 -->
+    <section id="hub-compras-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>📦 Hub de Compras</h2><p class="subtitle">Selecione o tipo de compra</p></header>
+      <div class="screen-body">
+        <div class="dashboard-grid">
+          <button class="card dashboard-card" id="btn-hc-insumos" type="button"><span class="card-icon icon-green">📦</span><span class="card-title">Insumos e Produtos</span><span class="card-text">Entrada de estoque por compras</span></button>
+          <button class="card dashboard-card" id="btn-hc-patrimonio" type="button"><span class="card-icon icon-navy">🏗️</span><span class="card-title">Bens e Patrimônio</span><span class="card-text">Ativos e imobilizados da fábrica</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATRIMÔNIO v2.3 -->
+    <section id="patrimonio-screen" class="screen hidden">
+      <header class="topbar"><button class="btn-back" data-back="hub-compras-screen" type="button">VOLTAR</button><h2>🏗️ Bens e Patrimônio</h2><p class="subtitle">Inventário de ativos da fábrica</p></header>
+      <div class="screen-body">
+        <div class="section-card">
+          <h3>📊 Inventário Total</h3>
+          <div id="patrimonio-inventario-resumo" style="font-size:1.1rem;font-weight:bold;color:#1e3a5f;padding:8px 0;">Calculando...</div>
+        </div>
+        <div class="section-card">
+          <h3>Cadastrar Bem / Patrimônio</h3>
+          <form id="patrimonio-form">
+            <input type="hidden" id="patrimonio-id" value="" />
+            <div class="field">
+              <label>Nome do Bem *</label>
+              <input type="text" id="patrimonio-nome" placeholder="Ex: Matriz de Sopro 20L" required />
+            </div>
+            <div class="field">
+              <label>Categoria</label>
+              <select id="patrimonio-categoria">
+                <option value="Equipamento">Equipamento</option>
+                <option value="Veículo">Veículo</option>
+                <option value="Ferramenta">Ferramenta</option>
+                <option value="Imóvel">Imóvel</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Valor Total (R$) *</label>
+              <input type="number" id="patrimonio-valor" min="0.01" step="0.01" placeholder="0,00" required />
+            </div>
+            <div class="field">
+              <label>Data de Aquisição *</label>
+              <input type="date" id="patrimonio-data" required />
+            </div>
+            <div class="field">
+              <label>Forma de Lançamento *</label>
+              <select id="patrimonio-forma" onchange="togglePatrimonioForma()">
+                <option value="quitado">✅ Já Pago (Inventário)</option>
+                <option value="parcelado">📋 Parcelado (Contas a Pagar)</option>
+              </select>
+            </div>
+            <div id="patrimonio-parcelas-field" class="field hidden">
+              <label>Número de Parcelas</label>
+              <input type="number" id="patrimonio-parcelas" min="2" max="60" value="12" />
+            </div>
+            <div class="field">
+              <label>Observação</label>
+              <input type="text" id="patrimonio-obs" placeholder="Fornecedor, número de série, etc." />
+            </div>
+            <div class="form-actions">
+              <button type="submit" id="btn-salvar-patrimonio" class="btn-primary">✅ Registrar Bem</button>
+            </div>
+          </form>
+        </div>
+        <div class="section-card" style="margin-top:16px;">
+          <h3>Lista de Bens Cadastrados</h3>
+          <div id="patrimonio-lista"><div class="empty-list">Nenhum bem cadastrado ainda.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="engenharia-custos-screen" class="screen hidden">
+      <div class="container">
+        <header class="topbar"><button class="btn-back" data-back="dashboard-screen" type="button">VOLTAR</button><h2>📊 Engenharia de Custos</h2><p class="subtitle">Análise de custo unitário e rentabilidade</p></header>
+        <div class="section-card">
+          <h3 class="section-title">🎨 Semáforo de Rentabilidade</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:0.85rem;">
+            <span style="background:#dcfce7;color:#166534;padding:3px 8px;border-radius:6px;">🟢 Maior margem</span>
+            <span style="background:#fef9c3;color:#854d0e;padding:3px 8px;border-radius:6px;">🟡 Margem &lt; 20%</span>
+            <span style="background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:6px;">🔴 Menor margem</span>
+          </div>
+          <div id="engenharia-custos-lista"><div class="empty-list">Carregando análise...</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MODAL LANÇAMENTO RÁPIDO DE FALTAS v2.8.1 ===== -->
+    <div id="modal-faltas" class="modal hidden" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+      <div class="card" style="width:90%;max-width:480px;padding:24px;border-radius:12px;max-height:90vh;overflow-y:auto;">
+        <h3 style="margin-top:0;margin-bottom:16px;">📅 Lançar Falta</h3>
+        <div class="form-grid">
+          <div class="field"><label for="modal-falta-funcionario">Funcionário</label><select id="modal-falta-funcionario" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;"><option value="">Selecione o funcionário...</option></select></div>
+          <div class="field"><label for="modal-falta-data">Data da Falta</label><input id="modal-falta-data" type="date" /></div>
+        </div>
+        <div class="form-actions" style="margin-top:16px;gap:8px;">
+          <button class="btn-primary" type="button" id="btn-confirmar-falta" style="background:#a16207;">Registrar Falta</button>
+          <button class="btn-secondary" type="button" id="btn-cancelar-falta">Fechar</button>
+        </div>
+        <div style="margin-top:18px;border-top:1px solid #fde68a;padding-top:14px;">
+          <h4 style="margin:0 0 10px;font-size:0.95rem;color:#a16207;">Últimas 5 faltas lançadas</h4>
+          <div id="modal-faltas-ultimas" style="font-size:0.88rem;"><div class="empty-list" style="font-size:0.85rem;">Nenhuma falta registrada.</div></div>
+        </div>
+      </div>
+    </div>
+
+  <!-- MODAL: LANÇAR LICENÇA v3.4 -->
+  <div id="modal-licenca" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:1100;align-items:center;justify-content:center;">
+    <div class="card" style="width:92%;max-width:500px;padding:24px;border-radius:14px;max-height:90vh;overflow-y:auto;border-top:4px solid #c084fc;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin:0;color:#7e22ce;">&#128197; Lançar Licença / Afastamento</h3>
+        <button id="btn-fechar-modal-licenca" type="button" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#6b7280;">&times;</button>
+      </div>
+      <input type="hidden" id="lic-funcionario-nome" />
+      <div class="form-grid two-columns">
+        <div class="field" style="grid-column:1/-1;"><label for="lic-funcionario-id">Funcionário</label><select id="lic-funcionario-id" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;"><option value="">Selecione...</option></select></div>
+        <div class="field"><label for="lic-data-inicio">Data Inicial</label><input id="lic-data-inicio" type="date" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;" /></div>
+        <div class="field"><label for="lic-data-fim">Data Final</label><input id="lic-data-fim" type="date" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;" /></div>
+        <div class="field" style="grid-column:1/-1;"><label for="lic-tipo">Tipo de Licença</label><select id="lic-tipo" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;"><option value="Médica">Médica</option><option value="Maternidade">Maternidade</option><option value="Paternidade">Paternidade</option><option value="Acidente de Trabalho">Acidente de Trabalho</option><option value="Particular">Particular</option><option value="Outro">Outro</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label for="lic-observacao">Observação (opcional)</label><input id="lic-observacao" type="text" placeholder="Ex: CID A00, atestado 15 dias..." style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:14px;" /></div>
+      </div>
+      <div class="form-actions" style="margin-top:18px;gap:8px;">
+        <button class="btn-primary" type="button" id="btn-salvar-licenca" style="background:#7e22ce;">&#128190; Salvar Licença</button>
+        <button class="btn-secondary" type="button" id="btn-fechar-modal-licenca2" onclick="fecharModalLicenca()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESUMO DO MÊS v3.2 -->
+  <div id="modal-resumo-mes" class="resumo-mes-overlay hidden" role="dialog" aria-modal="true">
+    <div class="resumo-mes-box">
+      <div class="resumo-mes-header">
+        <h2 style="margin:0;">&#128203; Resumo da Folha</h2>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <select id="resumo-mes-select" style="border:1px solid #d1d5db;border-radius:10px;padding:7px 10px;font-size:0.9rem;"></select>
+          <select id="resumo-ano-select" style="border:1px solid #d1d5db;border-radius:10px;padding:7px 10px;font-size:0.9rem;"></select>
+          <button type="button" id="btn-resumo-filtrar" class="btn-primary" style="padding:8px 14px;font-size:0.88rem;">&#128269; Filtrar</button>
+          <button type="button" id="btn-fechar-resumo-mes" class="btn-secondary" style="padding:8px 14px;font-size:0.88rem;">&#10005; Fechar</button>
+        </div>
+      </div>
+      <div id="resumo-mes-geral" class="resumo-mes-geral"></div>
+      <div id="resumo-mes-lista" class="resumo-mes-lista"></div>
+    </div>
+  </div>
+
+  </main>
+  <script src="backup.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+MANUSIA — EVOLUÇÃO EXTREMAMENTE CIRÚRGICA DO INDAGUA LÍRIOS
+
+Vou anexar nesta conversa a VERSÃO ATUAL E OFICIAL do IndAgua Lírios que estamos utilizando em produção.
+
+ATENÇÃO:
+ESSA VERSÃO ANEXADA É A BASE ABSOLUTA DESTA ATUALIZAÇÃO.
+
+O sistema está estável, completo e funcionando muito bem.
+
+NÃO quero reconstrução.
+NÃO quero refatoração geral.
+NÃO quero reorganização de código.
+NÃO quero alteração de banco.
+NÃO quero criação de novas stores.
+NÃO quero mudança de fórmulas.
+NÃO quero "melhorias" em outros módulos.
+
+Quero UMA ÚNICA evolução, extremamente localizada, no relatório já existente:
+
+👉 VENDAS POR CIDADE
+
+Todo o restante do sistema deverá permanecer exatamente como está.
+
+==================================================
+1. REGRA MÁXIMA — NÃO REGREDIR
+==================================================
+
+Antes de alterar qualquer código:
+
+1. Leia integralmente os arquivos que estou anexando.
+2. Identifique exatamente como funciona o relatório atual "Vendas por Cidade".
+3. Identifique as funções atuais responsáveis por:
+   - relatório mensal;
+   - relatório anual;
+   - agrupamento por cidade;
+   - leitura das vendas;
+   - identificação dos clientes;
+   - identificação dos produtos;
+   - impressão/PDF.
+
+4. Identifique a estrutura REAL das stores e dos objetos existentes.
+
+NÃO PRESUMA nomes de campos.
+NÃO invente propriedades.
+NÃO crie estruturas paralelas.
+
+Use exatamente os dados e relacionamentos que já existem na versão anexada.
+
+==================================================
+2. PROIBIÇÃO EXPRESSA DE ALTERAR O BANCO
+==================================================
+
+Esta atualização é SOMENTE DE RELATÓRIO/CONSULTA.
+
+NÃO:
+
+- alterar DB_VERSION;
+- criar store;
+- excluir store;
+- alterar store;
+- migrar banco;
+- modificar registros;
+- corrigir registros;
+- gravar dados novos;
+- alterar estrutura de clientes;
+- alterar estrutura de vendas;
+- alterar estrutura de produtos.
+
+O novo relatório deverá trabalhar SOMENTE COM LEITURA dos dados que já existem no IndexedDB.
+
+==================================================
+3. NÃO ALTERAR OUTROS MÓDULOS
+==================================================
+
+NÃO alterar absolutamente nada relacionado a:
+
+- Vendas
+- Estoque
+- Produção
+- Compras
+- Financeiro
+- Caixa
+- Gavetas
+- Clientes Devedores
+- Contas a Pagar
+- Contas a Receber
+- DRE
+- Folha de Pagamento
+- Funcionários
+- Vales
+- Faltas
+- Licenças/Afastamentos
+- Comodato
+- Patrimônio
+- Documentos
+- Avisos aos Clientes
+- Configurações
+- Telegram
+- Backup
+- backup.js
+- restauração de backup
+- Service Worker, salvo se for estritamente necessário apenas para atualizar o cache da nova versão
+- qualquer cálculo ou regra de negócio existente.
+
+NÃO aproveitar esta atualização para "limpar código", "modernizar", "padronizar", "otimizar" ou refatorar outras partes.
+
+A missão é CIRÚRGICA.
+
+==================================================
+4. RELATÓRIO QUE SERÁ EVOLUÍDO
+==================================================
+
+Já existe no sistema o relatório:
+
+👉 "Vendas por Cidade"
+
+Ele já possui:
+
+- botão MENSAL;
+- botão ANUAL;
+- botão IMPRIMIR / PDF;
+- filtro por mês;
+- filtro por ano;
+- tabela anual com:
+  Cidade | Jan | Fev | Mar | Abr | Mai | Jun | Jul | Ago | Set | Out | Nov | Dez | TOTAL.
+
+Esse relatório JÁ FUNCIONA.
+
+NÃO substituir esse relatório.
+
+NÃO eliminar sua lógica atual.
+
+NÃO alterar os valores que ele já calcula corretamente.
+
+Apenas acrescentar uma camada de detalhamento.
+
+==================================================
+5. NOVO FLUXO — DRILL-DOWN
+==================================================
+
+Quero transformar o relatório atual em uma consulta hierárquica:
+
+CIDADE
+↓
+CLIENTES DA CIDADE
+↓
+PRODUTOS COMPRADOS PELO CLIENTE
+↓
+QUANTIDADE POR MÊS + TOTAL + VALORES
+
+Exemplo:
+
+Na tabela anual atual aparece:
+
+Marco
+Mar: R$ 7.666,70
+Abr: R$ 22.934,40
+Mai: R$ 20.004,80
+Jun: R$ 4.595,90
+TOTAL: R$ 55.201,80
+
+O nome:
+
+👉 Marco
+
+deverá ficar clicável.
+
+==================================================
+6. AO CLICAR NA CIDADE
+==================================================
+
+Quando clicar em:
+
+👉 Marco
+
+abrir o detalhamento daquela cidade.
+
+Mostrar os clientes correspondentes à cidade de Marco, utilizando os cadastros e vendas REAIS existentes no sistema.
+
+Exemplo conceitual:
+
+VENDAS — MARCO
+
+Cliente A
+Cliente B
+Cliente C
+Cliente D
+...
+
+A interface pode ser tabela, cards ou lista compacta, desde que siga rigorosamente o padrão visual atual do IndAgua.
+
+IMPORTANTE:
+
+Não quero criar cadastro paralelo.
+
+Os clientes devem ser identificados pelos dados que já existem.
+
+==================================================
+7. AO CLICAR NO CLIENTE
+==================================================
+
+Ao selecionar um cliente, abrir o detalhamento das compras desse cliente.
+
+O foco principal agora é:
+
+👉 PRODUTOS
+👉 QUANTIDADES
+👉 VALORES
+👉 DISTRIBUIÇÃO MÊS A MÊS
+
+Exemplo conceitual:
+
+CLIENTE: XXXXX
+CIDADE: MARCO
+ANO: 2026
+
+Produto               Jan   Fev   Mar   Abr   Mai   Jun ... Dez   TOTAL QTD.   VALOR TOTAL
+
+Água 20 L              -     -    800  1.200  950   700 ...  -      3.650       R$ XX.XXX,XX
+
+Água 500/550 mL        -     -    120    300  180   100 ...  -        700       R$ X.XXX,XX
+
+Água 1,5 L             -     -     50     90   70    40 ...  -        250       R$ X.XXX,XX
+
+TOTAL DO CLIENTE        ...   ...   ...   ...   ...   ...           4.600       R$ XX.XXX,XX
+
+Esse exemplo é apenas visual.
+
+MANUSIA deve utilizar os NOMES REAIS dos produtos existentes no banco.
+
+==================================================
+8. QUANTIDADE POR PRODUTO
+==================================================
+
+Para cada produto comprado pelo cliente, calcular:
+
+- quantidade em janeiro;
+- quantidade em fevereiro;
+- quantidade em março;
+- quantidade em abril;
+- quantidade em maio;
+- quantidade em junho;
+- quantidade em julho;
+- quantidade em agosto;
+- quantidade em setembro;
+- quantidade em outubro;
+- quantidade em novembro;
+- quantidade em dezembro;
+- quantidade total no ano;
+- valor total faturado daquele produto.
+
+Isso permitirá responder rapidamente perguntas como:
+
+"Quantas águas de 20 litros esse cliente comprou no ano?"
+
+"Quantos pacotes de 500/550 mL ele comprou?"
+
+"Quantas águas de 1,5 L?"
+
+"Quanto esse produto representou em vendas para esse cliente?"
+
+==================================================
+9. VALORES HISTÓRICOS — REGRA CRÍTICA
+==================================================
+
+NÃO utilizar o preço atual do cadastro do produto para reconstruir faturamento histórico.
+
+O valor deve ser obtido das VENDAS REAIS registradas.
+
+Isso é fundamental porque o preço do produto pode ter mudado durante o ano.
+
+Portanto:
+
+VALOR HISTÓRICO = dados efetivamente registrados nas vendas daquele período.
+
+Não recalcular vendas antigas usando preço atual.
+
+==================================================
+10. RELATÓRIO MENSAL
+==================================================
+
+Preservar integralmente o funcionamento atual do botão:
+
+👉 MENSAL
+
+Quando estiver no modo mensal, o mesmo conceito de detalhamento deverá funcionar dentro do mês selecionado.
+
+Exemplo:
+
+Abril/2026
+↓
+Marco
+↓
+Cliente
+↓
+Produtos comprados em abril
+↓
+Quantidade + valor
+
+Não prejudicar o relatório mensal existente.
+
+==================================================
+11. RELATÓRIO ANUAL
+==================================================
+
+No modo:
+
+👉 ANUAL
+
+manter exatamente a tabela atual de cidades e meses.
+
+A diferença será apenas:
+
+👉 cidade passa a permitir clique
+👉 clique abre clientes
+👉 cliente abre produtos
+👉 produtos mostram quantidades por mês e total anual.
+
+==================================================
+12. NAVEGAÇÃO
+==================================================
+
+A navegação deve ser extremamente simples.
+
+Exemplo:
+
+Vendas por Cidade
+→ Marco
+→ Cliente X
+→ Produtos
+
+Deve existir maneira clara de voltar:
+
+Produtos
+→ Clientes de Marco
+→ Vendas por Cidade
+
+NÃO quebrar o botão VOLTAR existente.
+
+==================================================
+13. IMPRESSÃO / PDF
+==================================================
+
+O botão existente:
+
+👉 IMPRIMIR / PDF
+
+deve continuar funcionando.
+
+Se for tecnicamente seguro, permitir também imprimir o detalhamento que estiver aberto:
+
+- relatório da cidade;
+- relatório do cliente;
+- relatório de produtos.
+
+Mas NÃO prejudicar a impressão atual para implementar isso.
+
+Se houver risco de regressão, preserve primeiro o comportamento atual.
+
+==================================================
+14. SOMENTE LEITURA
+==================================================
+
+Essa funcionalidade é 100% ANALÍTICA.
+
+Ao:
+
+- clicar em cidade;
+- clicar em cliente;
+- consultar produtos;
+- mudar mês;
+- mudar ano;
+- imprimir;
+
+NENHUM registro do IndexedDB poderá ser alterado.
+
+O relatório apenas consulta e apresenta informações.
+
+==================================================
+15. NÃO DUPLICAR REGRAS
+==================================================
+
+Se o sistema atual já possui funções confiáveis para:
+
+- identificar cliente;
+- identificar cidade;
+- calcular total de venda;
+- identificar itens de venda;
+- identificar produtos;
+- tratar estornos;
+
+REUTILIZAR essas regras.
+
+Não criar uma segunda interpretação das vendas que possa apresentar números diferentes dos relatórios atuais.
+
+==================================================
+16. ESTORNOS E VENDAS INVÁLIDAS
+==================================================
+
+Respeitar exatamente a lógica atual do sistema para vendas estornadas/canceladas.
+
+Se uma venda estornada atualmente não entra no relatório "Vendas por Cidade", ela também NÃO pode entrar no detalhamento por cliente/produto.
+
+O total detalhado precisa fechar com o relatório superior.
+
+==================================================
+17. REGRA DE CONFERÊNCIA — MUITO IMPORTANTE
+==================================================
+
+Os níveis do relatório precisam fechar matematicamente.
+
+Exemplo:
+
+Se Marco mostra:
+
+TOTAL = R$ 55.201,80
+
+A soma dos clientes considerados naquele mesmo período deve resultar nos mesmos R$ 55.201,80.
+
+E a soma dos produtos de cada cliente deve fechar com o total daquele cliente.
+
+Portanto:
+
+TOTAL DOS PRODUTOS DO CLIENTE
+=
+TOTAL DO CLIENTE
+
+e:
+
+SOMA DOS CLIENTES DA CIDADE
+=
+TOTAL DA CIDADE
+
+Respeitando exatamente as mesmas regras do relatório original.
+
+Se houver diferença, NÃO mascarar.
+
+Investigar a estrutura dos dados antes de entregar.
+
+==================================================
+18. CUIDADO COM CADASTROS ANTIGOS
+==================================================
+
+Pode existir venda histórica cujo cliente/produto tenha estrutura antiga ou dados incompletos.
+
+NÃO modificar esses registros.
+
+NÃO executar migração automática.
+
+NÃO "corrigir" o banco.
+
+Apenas tratar a exibição de maneira segura.
+
+Se determinado dado histórico não puder ser identificado, usar uma identificação neutra como:
+
+"Produto não identificado"
+
+ou equivalente.
+
+Mas preservar os valores históricos existentes.
+
+==================================================
+19. PERFORMANCE
+==================================================
+
+O relatório deve funcionar offline e utilizar IndexedDB, como o sistema já funciona.
+
+Evitar consultas desnecessárias repetidas.
+
+Pode carregar os dados necessários em memória durante a geração do relatório e fazer os agrupamentos apenas para apresentação.
+
+Mas NÃO criar cache persistente, nova store ou banco paralelo.
+
+==================================================
+20. INTERFACE
+==================================================
+
+Manter o padrão visual atual:
+
+- cards;
+- bordas;
+- tipografia;
+- botões;
+- cores;
+- espaçamentos;
+- responsividade;
+- emojis/ícones já utilizados pelo sistema.
+
+NÃO redesenhar o IndAgua.
+
+NÃO mudar identidade visual.
+
+A nova funcionalidade deve parecer que sempre fez parte do sistema.
+
+==================================================
+21. ENTREGA COMPLETA
+==================================================
+
+Não quero apenas trechos de código.
+
+Não quero somente as funções modificadas.
+
+Não quero instruções para eu copiar código manualmente.
+
+Quero receber a NOVA VERSÃO COMPLETA DO INDAGUA, baseada EXATAMENTE nos arquivos que estou anexando.
+
+A entrega deverá conter todos os arquivos atuais necessários para o funcionamento do sistema, inclusive os arquivos que NÃO sofreram alteração.
+
+A estrutura deve permanecer exatamente compatível com a publicação atual e pronta para eu colocar em um NOVO REPOSITÓRIO.
+
+Não excluir nenhum arquivo existente.
+
+Não substituir arquivos completos por versões simplificadas.
+
+==================================================
+22. CONTROLE DE ALTERAÇÕES
+==================================================
+
+Antes da entrega, informar claramente:
+
+ARQUIVOS ALTERADOS:
+- quais arquivos precisaram ser modificados.
+
+FUNÇÕES ALTERADAS/ADICIONADAS:
+- quais funções foram tocadas;
+- quais funções novas foram adicionadas.
+
+BANCO DE DADOS:
+- confirmar expressamente:
+  "Nenhuma store foi criada, removida ou alterada."
+- confirmar:
+  "DB_VERSION foi mantido."
+
+MÓDULOS DE NEGÓCIO:
+- confirmar que nenhuma lógica de vendas, estoque, financeiro, DRE, folha, comodato, compras, patrimônio, backup ou demais módulos foi alterada.
+
+==================================================
+23. TESTES OBRIGATÓRIOS ANTES DA ENTREGA
+==================================================
+
+Testar pelo menos:
+
+TESTE 1
+Abrir "Vendas por Cidade".
+Confirmar que o relatório atual continua funcionando exatamente como antes.
+
+TESTE 2
+Selecionar ANUAL.
+Clicar em uma cidade com vendas.
+
+TESTE 3
+Confirmar que aparecem os clientes daquela cidade.
+
+TESTE 4
+Selecionar um cliente.
+
+TESTE 5
+Confirmar que aparecem os produtos realmente comprados pelo cliente.
+
+TESTE 6
+Conferir quantidade de cada produto mês a mês.
+
+TESTE 7
+Conferir quantidade total anual de cada produto.
+
+TESTE 8
+Conferir valor histórico faturado por produto.
+
+TESTE 9
+Somar os produtos e confirmar que o valor fecha com o cliente.
+
+TESTE 10
+Somar os clientes e confirmar que fecha com o total da cidade do relatório original.
+
+TESTE 11
+Testar modo MENSAL.
+
+TESTE 12
+Testar VOLTAR.
+
+TESTE 13
+Testar IMPRIMIR/PDF.
+
+TESTE 14
+Recarregar o PWA e verificar que os demais módulos continuam funcionando.
+
+TESTE 15
+Confirmar que nenhuma operação de consulta desse relatório realizou escrita no IndexedDB.
+
+==================================================
+24. PRINCÍPIO DESTA ATUALIZAÇÃO
+==================================================
+
+NÃO ESTAMOS CRIANDO UM NOVO SISTEMA.
+
+NÃO ESTAMOS CRIANDO UM NOVO BANCO.
+
+NÃO ESTAMOS ALTERANDO AS REGRAS DO INDAGUA.
+
+Estamos apenas transformando o relatório já existente:
+
+"VENDAS POR CIDADE"
+
+em um relatório analítico com aprofundamento:
+
+CIDADE
+→ CLIENTE
+→ PRODUTO
+→ QUANTIDADE POR MÊS
+→ QUANTIDADE TOTAL
+→ VALOR FATURADO
+
+utilizando exclusivamente os dados que o sistema já possui.
+
+==================================================
+25. PRIORIDADE ABSOLUTA
+==================================================
+
+Se durante a implementação surgir qualquer possibilidade de alterar uma regra de negócio existente para fazer o relatório funcionar:
+
+NÃO ALTERE A REGRA.
+
+Adapte o relatório aos dados e às regras atuais.
+
+A estabilidade do sistema tem prioridade sobre qualquer melhoria visual ou técnica.
+
+Faça a menor alteração possível.
+
+Esta deve ser uma evolução CIRÚRGICA, SEGURA e SEM REGRESSÃO.
